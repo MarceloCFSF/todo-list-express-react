@@ -1,10 +1,27 @@
-import express, { Express } from 'express';
-import healthRoutes from './routes/healthRoutes';
+import express, { Express, Router } from 'express';
 
-const app: Express = express();
+export class App {
+  private readonly app: Express;
 
-app.use(express.json());
+  constructor(private port: number) {
+    this.port = parseInt(process.env.PORT ?? '3000');
+    this.app = express();
+    this.app.use(express.json());
+  }
 
-app.use(healthRoutes);
+  getApplication() {
+    return this.app;
+  }
 
-export default app;
+  start() {
+    this.app.listen(this.port, () => {
+      console.log(
+        `[server]: Server is running at http://localhost:${this.port}`
+      );
+    });
+  }
+
+  addRoute(routeName: string, router: Router) {
+    this.app.use(routeName, router);
+  }
+}

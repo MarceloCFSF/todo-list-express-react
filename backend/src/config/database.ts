@@ -1,21 +1,25 @@
 import { Pool } from 'pg'
 
+interface DatabaseConfig {
+  user: string,
+  host: string,
+  database: string,
+  password: string,
+  port: number,
+}
+
 export default class Database {
   private readonly pool: Pool;
   private static instance: Database; 
 
-  constructor() {
+  constructor(config: DatabaseConfig) {
     this.pool = new Pool({
-      user: process.env.DB_USER || 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      database: process.env.DB_NAME || 'todo',
-      password: process.env.DB_PASS || 'root',
-      port: Number(process.env.DB_PORT) || 5432,
+      user: config.user,
+      host: config.host,
+      database: config.database,
+      password: config.password,
+      port: config.port,
     });
-  }
-
-  static getInstance(): Database {
-    return this.instance ??= new Database();
   }
 
   async query(sql: string, params?: any[]) {
