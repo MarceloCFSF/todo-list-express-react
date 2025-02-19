@@ -1,5 +1,11 @@
 import { Pool } from 'pg'
 
+export interface IDatabase {
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+  query(sql: string, params?: any[]): Promise<any>;
+}
+
 interface DatabaseConfig {
   user: string,
   host: string,
@@ -8,7 +14,7 @@ interface DatabaseConfig {
   port: number,
 }
 
-export default class Database {
+export default class Database implements IDatabase {
   private readonly pool: Pool;
   private static instance: Database; 
 
@@ -20,9 +26,19 @@ export default class Database {
       password: config.password,
       port: config.port,
     });
+
+    this.connect();
   }
 
-  async query(sql: string, params?: any[]) {
+  async connect(): Promise<void> {
+    this.pool.connect();
+  }
+
+  async query(sql: string, params?: any[]): Promise<any> {
     return this.pool.query(sql, params);
+  }
+
+  async disconnect(): Promise<void> {
+    this.pool.end();
   }
 }
