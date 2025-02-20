@@ -8,9 +8,10 @@ RUN npm install --only=production
 COPY . .
 RUN npm run build
 
-FROM node:22
+FROM nginx:alpine
 
-WORKDIR /app
-COPY --from=builder /app /app
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-CMD ["npm", "start"]
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

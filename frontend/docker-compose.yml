@@ -1,0 +1,13 @@
+include:
+  - ../backend/docker-compose.yml
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+    restart: always
