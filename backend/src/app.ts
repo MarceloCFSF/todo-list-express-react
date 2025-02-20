@@ -1,4 +1,5 @@
 import express, { Express, Router } from 'express';
+import cors from 'cors';
 
 export class App {
   private readonly app: Express;
@@ -7,6 +8,7 @@ export class App {
     this.port = parseInt(process.env.PORT ?? '3000');
     this.app = express();
     this.app.use(express.json());
+    this.app.use(cors({ origin: "*" }));
   }
 
   getApplication() {
