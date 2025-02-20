@@ -3,6 +3,18 @@ import { App } from "../app";
 import { TaskRouter } from "../routes/taskRouter";
 import { MockDatabase } from "./mocks/mockDatabase";
 
+const newTask = {
+  title: 'Task',
+  description: 'Description',
+  status: 'pending'
+};
+
+const updateTask = {
+  title: 'Update Task',
+  description: 'Update Description',
+  status: 'pending'
+};
+
 describe('Tasks', () => {
   let app: App;
   let database: MockDatabase;
@@ -28,12 +40,6 @@ describe('Tasks', () => {
   });
 
   it('Should create a task', async () => {
-    const newTask = {
-      title: 'Task',
-      description: 'Description',
-      status: 'pending'
-    }
-
     const response = await request(app.getApplication())
       .post("/tasks")
       .send(newTask)
@@ -51,12 +57,6 @@ describe('Tasks', () => {
   });
 
   it('Should return task by id', async () => {
-    const newTask = {
-      title: 'Task',
-      description: 'Description',
-      status: 'pending'
-    };
-
     const createResponse = await request(app.getApplication())
       .post('/tasks')
       .send(newTask)
@@ -72,22 +72,10 @@ describe('Tasks', () => {
   });
 
   it('Should update a task', async () => {
-    const newTask = {
-      title: 'Task',
-      description: 'Description',
-      status: 'pending'
-    };
-
     const createResponse = await request(app.getApplication())
       .post('/tasks')
       .send(newTask)
       .expect(201);
-    
-    const updateTask = {
-      title: 'Update Task',
-      description: 'Update Description',
-      status: 'pending'
-    };
 
     const id = createResponse.body.id;
 
@@ -97,32 +85,26 @@ describe('Tasks', () => {
       .expect(200);
 
     expect(updateResponse.body).toMatchObject(updateTask);
-    
+
     const response = await request(app.getApplication())
       .get(`/tasks/${id}`)
       .expect(200);
 
     expect(response.body).toMatchObject(updateTask);
   });
-  
-  it('Should delete a task', async () => {
-    const newTask = {
-      title: 'Task',
-      description: 'Description',
-      status: 'pending'
-    };
 
+  it('Should delete a task', async () => {
     const createResponse = await request(app.getApplication())
       .post('/tasks')
       .send(newTask)
       .expect(201);
 
     const id = createResponse.body.id;
-    
+
     const deleteResponse = await request(app.getApplication())
       .delete(`/tasks/${id}`)
       .expect(200);
-    
+
     expect(deleteResponse.body).toEqual({
       message: "Successful deleted task"
     })
@@ -130,7 +112,7 @@ describe('Tasks', () => {
     const afterDelete = await request(app.getApplication())
       .get(`/tasks`)
       .expect(200);
-    
+
     expect(afterDelete.body.length).toBe(0);
   });
 });
