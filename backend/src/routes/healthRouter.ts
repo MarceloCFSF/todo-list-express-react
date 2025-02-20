@@ -1,8 +1,8 @@
-import Database from '../config/database';
+import { IDatabase } from '../config/database';
 import { RouterInterface } from './routerInterface';
 
 export class HealthRouter extends RouterInterface {
-  constructor(database: Database) {
+  constructor(database: IDatabase) {
     super(database);
 
     this.router.get('/', async (_, res) => {

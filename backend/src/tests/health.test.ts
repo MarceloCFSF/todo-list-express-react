@@ -10,7 +10,7 @@ describe("Server Health Check", () => {
   beforeAll(async () => {
     app = new App(3000);
     database = new MockDatabase();
-    await database.connect();
+
     const router = new HealthRouter(database);
     app.addRoute('/health', router.getRouter());
   });
