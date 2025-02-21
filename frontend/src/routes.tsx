@@ -1,10 +1,18 @@
-import { Route, Routes,  } from "react-router-dom";
+import { Route, Routes, } from "react-router-dom";
 import Tasks from "./pages/Tasks";
+import { TaskProvider } from "./providers/TaskProvider";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Tasks />} />
+      <Route
+        path="/"
+        element={
+          <TaskProvider>
+            <Tasks />
+          </TaskProvider>
+        }
+      />
     </Routes>
   )
 }

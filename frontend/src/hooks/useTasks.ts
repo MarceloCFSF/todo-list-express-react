@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react"
-import { Task } from "../models/tasks"
-import { taskService } from "../services/taskService";
+import { useContext} from "react"
+import { TaskContext } from "../contexts/taskContext";
 
 export const useTasks = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    taskService.getAll()
-      .then(setTasks)
-      .finally(() => setLoading(false))
-  }, [])
-
-  return { tasks, loading }
+  const context = useContext(TaskContext);
+  if (!context) throw new Error("useTasks must be used within a TaskProvider");
+  return context;
 }
