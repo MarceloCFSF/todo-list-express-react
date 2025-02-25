@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { Task } from "../models/tasks";
 
-interface TaskContextType {
+export interface TaskContextType {
   loading: boolean,
   tasks: Task[];
   fetchTasks: () => Promise<void>;
