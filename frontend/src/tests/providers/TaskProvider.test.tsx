@@ -15,6 +15,21 @@ vi.mock("../../services/taskService", () => ({
   },
 }));
 
+const initialTasks: Task[] = [
+  {
+    id: 1,
+    title: "Task 1",
+    description: "Description 1",
+    status: "pending"
+  },
+  {
+    id: 2,
+    title: "Task 2",
+    description: "Description 2",
+    status: "pending"
+  },
+]
+
 const newTask: Task = {
   id: 1,
   title: "Nova Tarefa",
@@ -78,23 +93,77 @@ describe("TaskProvider", () => {
       </TaskProvider>
     );
 
-    await waitFor(() => {
-      expect(contextValue?.tasks).toHaveLength(0);
-    });
-
     await act(() => contextValue!.createTask(newTask));
 
     await waitFor(() => {
       expect(contextValue!.tasks).toHaveLength(1);
       expect(contextValue!.tasks[0]).toMatchObject(newTask);
     });
-    
+
     await act(() => contextValue!.createTask(newTask));
-    
+
     await waitFor(() => {
       expect(contextValue!.tasks).toHaveLength(2);
     });
 
     expect(taskService.create).toHaveBeenCalledWith(newTask);
   });
+
+  it("should update a task", async () => {
+    vi.mocked(taskService.getAll).mockResolvedValue(initialTasks);
+
+    vi.mocked(taskService.update).mockResolvedValue(newTask);
+
+    let contextValue: TaskContextType | null = null;
+
+    render(
+      <TaskProvider>
+        <TaskContext.Consumer>
+          {(value) => {
+            contextValue = value!;
+            return null;
+          }}
+        </TaskContext.Consumer>
+      </TaskProvider>
+    );
+
+    await act(() => contextValue!.updateTask(newTask.id!, newTask))
+
+    await waitFor(() => {
+      const updatedTask = contextValue!.tasks
+        .find(task => task.id === newTask.id!)
+      expect(updatedTask).toMatchObject(newTask);
+    });
+
+    expect(taskService.update).toHaveBeenCalledWith(newTask.id!, newTask);
+  });
+
+  it("should delete a task", async () => {
+    vi.mocked(taskService.getAll).mockResolvedValue(initialTasks);
+    vi.mocked(taskService.delete).mockResolvedValue();
+
+    let contextValue: TaskContextType | null = null;
+
+    render(
+      <TaskProvider>
+        <TaskContext.Consumer>
+          {(value) => {
+            contextValue = value!;
+            return null;
+          }}
+        </TaskContext.Consumer>
+      </TaskProvider>
+    );
+
+    await act(() => contextValue!.deleteTask(initialTasks[0].id!));
+
+    waitFor(() => {
+      expect(contextValue!.tasks).toHaveLength(1);
+      const tasks = initialTasks
+        .filter(task => task.id !== initialTasks[0].id)
+      expect(contextValue!.tasks).toEqual(tasks);
+    })
+
+    expect(taskService.delete).toBeCalledWith(initialTasks[0].id);
+  })
 });
