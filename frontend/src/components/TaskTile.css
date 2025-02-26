@@ -1,0 +1,57 @@
+.task-tile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.conclude-task-button {
+  width: 20px;
+  height: 20px;
+}
+
+.task-tile-info {
+  max-width: 70%;
+}
+
+.task-title {
+  font-weight: bold;
+}
+
+.task-description {
+  font-size: 14px;
+  color: #666;
+}
+
+.task-tile-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.start-task-button,
+.stop-task-button,
+.delete-task-button {
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.start-task-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.stop-task-button {
+  background-color: #ffc107;
+  color: white;
+}
+
+.delete-task-button {
+  background-color: #dc3545;
+  color: white;
+}

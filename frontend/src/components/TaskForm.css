@@ -1,0 +1,73 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field label {
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.field input,
+.field textarea,
+.field select {
+  font-size: 20px;
+  padding: 8px;
+  border: 1px solid #666;
+  border-radius: 5px;
+  background-color: #222;
+  color: #fff;
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.field select {
+  width: fit-content;
+  cursor: pointer;
+}
+
+.select-field {
+  align-self: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+}
+
+button[type="submit"] {
+  align-self: center;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: fit-content;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[type="submit"]:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 12px;
+}

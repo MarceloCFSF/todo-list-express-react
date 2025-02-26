@@ -1,51 +1,21 @@
-import { useCallback, useEffect, useRef } from "react";
 import { Task } from "../models/tasks";
-import "./TaskModal.css";
+import { TaskFormProvider } from "../providers/TaskFormProvider";
+import { TaskForm } from "./TaskForm";
+import Modal, { ModalType } from "./Modal";
 
-interface TaskModalType {
-  open: boolean,
+interface TaskModalType extends ModalType {
   task?: Task,
-  onClose: () => void
 }
 
 const TaskModal = (props: TaskModalType) => {
-  const { open, onClose } = props;
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (
-      modalRef.current 
-      && !modalRef.current.contains(event.target as Node)
-    ) onClose();
-  }, [onClose]);
-  
-  useEffect(() => {
-    if (!open) return;
-
-    setTimeout(() => {
-      document.addEventListener("click", handleClickOutside);
-    }, 0);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [open, onClose, handleClickOutside]);
-
-  if (!open) return null;
+  const { open, onClose, task } = props;
 
   return (
-    <div ref={modalRef} className="modal">
-      <div className="modal-content">
-        <div className="modal-header">
-          <span onClick={onClose} className="close">&times;</span>
-          <h2>Modal Header</h2>
-        </div>
-        <div className="modal-body">
-          <p>Some text in the Modal Body</p>
-          <p>Some other text...</p>
-        </div>
-        <div className="modal-footer">
-          <h3>Modal Footer</h3>
-        </div>
-      </div>
-    </div>
+    <Modal open={open} onClose={onClose}>
+      <TaskFormProvider onSubmit={onClose} task={task}>
+        <TaskForm />
+      </TaskFormProvider>
+    </Modal>
   )
 }
 
