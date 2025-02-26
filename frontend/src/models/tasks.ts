@@ -17,6 +17,6 @@ export const taskStatusValues = Object.values(TaskStatus);
 
 export const TaskStatusOptions: Record<TaskStatus, string> = {
   pending: "Pendente",
-  inProgress: "Em andamento",
+  inProgress: "Em progresso",
   concluded: "Concluído",
 }

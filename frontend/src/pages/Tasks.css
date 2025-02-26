@@ -1,0 +1,12 @@
+.task-list h2 {
+  text-align: left;
+  color: #fff;
+}
+
+.task-list ul { 
+  display: flex;
+  flex-direction: column; 
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+}

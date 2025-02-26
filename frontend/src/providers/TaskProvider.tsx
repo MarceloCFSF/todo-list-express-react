@@ -21,7 +21,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   const createTask = async (task: Omit<Task, "id">) => {
     setLoading(true);
     const newTask = await taskService.create(task);
-    setTasks((prev) => [...prev, newTask]);
+    setTasks((prev) => [newTask, ...prev]);
     setLoading(false);
   };
 

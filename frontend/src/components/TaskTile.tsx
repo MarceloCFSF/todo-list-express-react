@@ -35,7 +35,7 @@ const TaskTile = ({ task, openModal }: TaskTileType) => {
   }
 
   return (
-    <li className="task-tile" key={`task_${task.id}`}>
+    <li className="task-tile">
       <DeleteTaskModal
         open={deleteTask}
         onClose={closeDeleteModal}
