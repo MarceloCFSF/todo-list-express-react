@@ -5,7 +5,9 @@ export class TaskRepository {
   constructor(private readonly db: IDatabase) {}
 
   async getAll(): Promise<Task[]> {
-    const result = await this.db.query('SELECT * FROM tasks;');
+    const query = `SELECT * FROM tasks
+      ORDER BY created_at DESC`;
+    const result = await this.db.query(query);
     return result.rows;
   }
 
