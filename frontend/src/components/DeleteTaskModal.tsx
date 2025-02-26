@@ -17,8 +17,10 @@ const DeleteTaskModal = (props: DeleteTaskModalType) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      Tem certeza de que quer deletar a tarefa {task.title}?
-      <div style={{ display: "flex", gap: "10px" }}>
+      <h3>
+        Tem certeza de que quer deletar a tarefa {task.title}?
+      </h3>
+      <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
         <button onClick={onClose}>Cancelar</button>
         <button onClick={handleDelete}>Sim</button>
       </div>

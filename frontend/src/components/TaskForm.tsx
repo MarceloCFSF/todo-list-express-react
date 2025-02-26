@@ -10,12 +10,12 @@ export const TaskForm = () => {
       <div className="field">
         <label>Titulo</label>
         <Field type="text" name="title" />
-        <ErrorMessage name="title" component="div" />
+        <ErrorMessage className="error-message" name="title" component="div" />
       </div>
       <div className="field">
         <label>Descrição</label>
         <Field type="text" name="description" as="textarea" />
-        <ErrorMessage name="description" component="div" />
+        <ErrorMessage className="error-message" name="description" component="div" />
       </div>
       <div className="field select-field">
         <label>Status</label>
@@ -26,7 +26,7 @@ export const TaskForm = () => {
             </option>
           ))}
         </Field>
-        <ErrorMessage name="status" component="div" />
+        <ErrorMessage className="error-message" name="status" component="div" />
       </div>
       <button type="submit" disabled={isSubmitting}>
         Enviar
